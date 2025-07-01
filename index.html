@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reservation Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f3f3f3;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #5a2d82;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #4a2570;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align:center;">Reservation Form</h2>
+
+  <form id="reservationForm">
+    <input type="text" name="fullname" placeholder="Full Name" required />
+    <input type="tel" name="phone" placeholder="Phone Number" required />
+    <input type="date" name="checkin" placeholder="Check-in Date" required />
+    <input type="number" name="adults" placeholder="Number of Adults" required />
+    <input type="number" name="kids" placeholder="Number of Kids" required />
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    document.getElementById("reservationForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+
+      const data = {
+        fullname: form.fullname.value,
+        phone: form.phone.value,
+        checkin: form.checkin.value,
+        adults: form.adults.value,
+        kids: form.kids.value
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbzVN8j46aTuZ-oS4yxCSNlZqph-XQVfgHf9kYWJxnUJAnwSV_PSjKDJ5-CuQOxdTB0itA/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(res => {
+        alert("Reservation submitted successfully!");
+        form.reset();
+      })
+      .catch(err => {
+        alert("There was an error submitting the form.");
+        console.error("Error:", err);
+      });
+    });
+  </script>
+
+</body>
+</html>
